@@ -5,7 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="login100-form-title">
+                <span class="login100-form-title-1">
+                    <div class="card-header">{{ __('Register') }}</div>
+                </span>
+                </div>
+
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">

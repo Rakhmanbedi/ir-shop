@@ -47,12 +47,7 @@
                         <p>Price: {{$product->price}}</p>
                         <br>
 {{--                            <a href="{{route('$product.show',$product->id)}}" class="btn btn-primary">Read more</a>--}}
-                        <form action="{{route('product.destroy', $product->id)}}" method="post">
 
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">DELETE</button>
-                        </form>
                     </div>
                 </div>
             </div>

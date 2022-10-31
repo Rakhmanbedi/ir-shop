@@ -1,36 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{route('product.index')}}">Go to Index Posts</a>
-    <h3>{{$product->title}}</h3>
-    <p>{{$product->content}}</p>
-    <a href="{{route('product.edit', $product->id)}}">Edit</a>
-
-    <form action="{{route('comments.store',[$post->id])}}" method="post">
-        @csrf
-
-
-        Commentary:<br> <textarea  name="comment" cols="30" rows="10"></textarea>
+    <div class="container">
+       <a class="btn btn-dark" style="margin-left: 1230px;" href="{{route('product.index')}}">Menu</a>
         <br>
-        <input type="hidden" name="post_id" value="{{$product->id}}">
-        <button type="submit" >Save comment</button>
+        <form action="{{route('product.update', $product->id)}}" method="post">
+            @csrf
+            @method('PUT')
 
-    </form>
-
-    @foreach($comment as $com)
-        @if($com->product_id==$product->id)
-            <p>{{$com->comment}}</p>
-
-            <a href="{{route('comments.edit',$com->id)}}">Edit</a>
-
+            <input class="form-control form-control-lg" type="text" name="name" value="{{$product->name}}" placeholder="Product name">
             <br>
-            <form action="{{route('comments.destroy', $com->id)}}" method="post">
-                @csrf
-                @method('DELETE')
-                <button type="submit">DELETE</button>
-            </form>
-        @endif
-    @endforeach
+            <input class="form-control" type="text" name="url" placeholder="Product URL Photo" value="{{$product->url}}">
+            <br>
+            <input class="form-control form-control-sm" type="text" placeholder="Size" name="size" value="{{$product->size}}">
+            <br>
+            <select name="category_id" class="form-select">
+                @foreach($categories as $cat)
+                    <option @if($cat->id == $product->categoty_id) selected @endif value="{{$cat->id}}">{{$cat->name}}</option>
+                @endforeach
 
+            </select>
+            <br>
+            <textarea class="form-control" name="description" id="" cols="30" rows="10">{{$product->description}}</textarea>
+            <br>
+            <input class="form-control form-control-lg" type="number" name="price" value="{{$product->price}}" placeholder="Product price">
+            <br>
 
+            <button class="btn btn-success" style="margin-left: 1152px;" type="submit">Update</button>
+
+        </form>
+    </div>
 @endsection

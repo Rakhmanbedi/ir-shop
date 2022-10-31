@@ -49,6 +49,7 @@
             <span class="input-group-text" id="inputGroup-sizing-default" >Price</span>
             <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >
         </div>
+
         <br>
         <button type="submit" class="btn btn-success" style="width: 100px; margin-left: 900px">Sale</button>
     </form>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductController extends Controller
@@ -34,27 +36,37 @@ class ProductController extends Controller
 
         ]);
 
-        Product::create($validated);
+//       Product::create($validated + ['user_id' => Auth::user()->id]);
+//        Auth::user()->products()->create($validated);
+       Product::create($validated);
         return redirect(route('product.index'))->with('message', 'Submitted successfully');
     }
 
 
     public function show(Product $product)
     {
-        return view('product.productshow',['products'=>$product]);
+        return view('product.productshow',['products'=>$product, 'comment'=>Comment::all()]);
 
     }
 
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return view('product.edit', ['product'=>$product,'categories'=>Category::all()]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $product->update([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'category_id' => $request->category_id,
+            'url' => $request->url,
+            'price' => $request->price,
+            'size' => $request->size
+        ]);
+        return redirect(route('product.index'));
     }
 
 

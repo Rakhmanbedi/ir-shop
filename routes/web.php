@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth2\RegisterController;
 use App\Http\Controllers\Auth2\LoginController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function (){
     Route::resource('product', ProductController::class)->except('index','show');
     Route::post('/logout', [LoginController::class,'logout'])->name('logout');
+    Route::resource('comments', CommentController::class )->only('store','destroy');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
