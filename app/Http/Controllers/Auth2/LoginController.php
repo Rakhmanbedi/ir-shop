@@ -22,6 +22,8 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
         if (Auth::attempt($validated)){
+            if (Auth::user()->role->name == "admin")
+                return redirect()->intended('/adm/users');
             return redirect()->intended('/product');
         }
         return back()->withErrors('Incorrect email or password');

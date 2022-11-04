@@ -7,7 +7,9 @@
 
 {{--    <img style="margin-left: 50px" width="80" src="https://i.pinimg.com/280x280_RS/2a/a4/61/2aa461ebf2ab25f4248f395d4ee41e58.jpg" alt="">--}}
 
-    <a href="{{route('product.create')}}"  class="btn btn-outline-dark" style="margin-left: 1200px">Add new product</a>
+   @can('create', App\Models\Product::class)
+       <a href="{{route('product.create')}}"  class="btn btn-outline-dark" style="margin-left: 1200px">Add new product</a>
+   @endcan
     <hr style="">
             <div class="container">
                 <div class="row justify-content-center">

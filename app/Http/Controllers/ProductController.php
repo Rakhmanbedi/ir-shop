@@ -20,12 +20,14 @@ class ProductController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Product::class);
         return view('product.create',['categories'=>Category::all()]);
     }
 
 
     public function store(Request $request)
     {
+        $this->authorize('create', Product::class);
         $validated = $request->validate([
             'name' => 'required|max:255',
             'url' => 'required',
@@ -72,6 +74,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
         $product->delete();
         return redirect(route('product.index'));
     }
