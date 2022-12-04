@@ -15,17 +15,23 @@
     IR-Shop
     <a href="{{route('product.index')}}" style="margin-left: 700px" class="btn-outline-dark">Go to product page</a>
 
-    <form action="{{route('product.store')}}" method="post">
+    <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="input-group mb-3" style="width: 1000px">
             <span class="input-group-text" id="inputGroup-sizing-default" >Product name</span>
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >
         </div>
 
-        <div class="input-group mb-3" style="width: 1000px">
-            <span class="input-group-text" id="inputGroup-sizing-default" >Photo URL</span>
-            <input type="text" class="form-control @error('url') is-invalid @enderror" name="url" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >
+
+        <div class="input-group mb-3">
+            <input type="file" class="form-control @error('url') is-invalid @enderror" id="urlInut"  name="url">
+            <label class="input-group-text" for="inputGroupFile02">Input photo</label>
         </div>
+
+{{--        <div class="input-group mb-3" style="width: 1000px">--}}
+{{--            <span class="input-group-text" id="inputGroup-sizing-default" >Photo URL</span>--}}
+{{--            <input type="text" class="form-control @error('url') is-invalid @enderror" name="url" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >--}}
+{{--        </div>--}}
         <div class="input-group mb-3" style="width: 1000px">
             <span class="input-group-text" id="inputGroup-sizing-default" >Size</span>
             <input type="text" class="form-control @error('size') is-invalid @enderror" name="size" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >

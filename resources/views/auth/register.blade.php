@@ -4,15 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="border-radius: 15px">
                 <div class="login100-form-title">
                 <span class="login100-form-title-1">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ __('Register') }}
+                    <img src="{{asset('logincss/images/bg-01.jpg')}}" alt="" style="border-radius: 15px">
+                    </div>
                 </span>
                 </div>
 
 
-                <div class="card-body">
+                <div class="card-body" style="">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

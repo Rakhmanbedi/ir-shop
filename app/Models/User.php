@@ -44,5 +44,13 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
 
     }
+    public function productsRated(){
+        return $this->belongsToMany(Product::class)->
+            withPivot('rating');
+    }
+    public function basketProduct(){
+        return $this->belongsToMany(Product::class,'user_product')->
+        withPivot('size','color','amount');
+    }
 
 }

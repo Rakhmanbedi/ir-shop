@@ -4,35 +4,93 @@
 
     <a style="margin-left: 1300px" width="50" href="{{route('product.index')}}" class="btn btn-dark">Go to Product page</a>
 
-    <div class="container">
+    <div class="container shadow-lg border-2">
         <div class="row">
             <div class="item__inner">
                 <div class="item__inner-left">
                     <div class="mount-product-slider">
-                       <div class="col-sm-4" style="margin-left: 200px">
-                          <div class="card mt-3">
-                             <img class="card-img-top" src="{{$products->url}}" alt="">
+                       <div class="col-sm-5" style="margin-left: 80px">
+                          <div class="card mt-3" style="border-radius: 20px">
+                             <img class="card-img-top" src="{{$products->url}}" alt="" style="border-radius: 20px">
                           </div>
                        </div>
                     </div>
                 </div>
                 <div class="item__inner-right" >
-                    <div class="col-sm-7" style="width: 550px; margin-left: 650px; margin-top: -378px" >
+                    <div class="col-sm-7" style="width: 550px; margin-left: 650px; margin-top: -375px" >
                         <div class="item__description">
                             <div class="mount-item-product">
-                                <div class="card-body" style="height: 380px">
+                                <div class="card-body" style="height: 500px">
                                     <div class="row-cols-1">
+                                        @auth
+                                            <form action="{{route('products.rate', $products->id)}}" method="post">
+                                                @csrf
+                                                <select name="rate">
+                                                    @for($i=0; $i<=5; $i++)
+                                                        {{$myRating == $i ? 'selected' : ''}}
+                                                        <option  value="{{$i}}">
+                                                            {{$i == 0 ? 'Not rated' : $i}}
+                                                        </option>
+                                                    @endfor
+                                                </select>
+                                                <button type="submit">Rate</button>
+                                            </form>
+
+                                            <form action="{{route('products.unrate', $products->id)}}" method="post">
+                                                @csrf
+                                                <button type="submit">UnRate</button>
+                                            </form>
+
+
+
+
+                                            <form action="{{route('products.basketAll', $products->id)}}" method="post">
+                                                @csrf
+{{--                                                <input type="hidden" value="{{$products->name}}" name="name">--}}
+                                                Color:<select name="color">
+                                                    <option value="white">white</option>
+                                                    <option value="black">black</option>
+                                                    <option value="red">red</option>
+                                                    <option value="blue">blue</option>
+                                                    <option value="yellow">yellow</option>
+                                                    <option value="green">green</option>
+                                                </select>
+                                                Size:
+                                                <select name="size">
+                                                    @for($i=38; $i<=45; $i++)
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                                Amount:<select name="amount">
+                                                    @for($i=1; $i<=100; $i++)
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                                    <button type="submit">Basket
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+                                                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                                                        </svg>
+                                                    </button>
+
+
+
+{{--                                                <h4>{{$products->price}}</h4>--}}
+                                            </form>
+
+                                        @endauth
                                         <h5 class="card-title"><h3>{{$products->name}}</h3></h5>
                                         <p class="card-text">Description:{{$products->description}}</p>
                                         <p>Size: {{$products->size}}</p>
                                         <p>Price: {{$products->price}} тг</p>
                                     </div>
-                                    <a href="{{route('product.edit',$products->id)}}" class="btn btn-warning" style="width: 77px; margin-bottom: 10px;">Edit
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                        </svg>
-                                    </a>
+                                    @can('edit', $products)
+                                        <a href="{{route('product.edit',$products->id)}}" class="btn btn-warning" style="width: 77px; margin-bottom: 10px;">Edit
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
+                                        </a>
+                                    @endcan
 
                                     @can('delete', $products)
                                         <form action="{{route('product.destroy', $products->id)}}" method="post">
@@ -48,9 +106,14 @@
                                     @endcan
                                     <br>
                                     <button class="btn btn-secondary">Bye now
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
-                                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-                                        </svg></button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+                                            <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z"/>
+                                        </svg>
+                                    </button>
+
+                                    @if($avgRating != 0)
+                                        <h5>R:{{$avgRating}}</h5>
+                                    @endif
                                 </div>
 
                             </div>

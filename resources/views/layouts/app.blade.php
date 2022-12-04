@@ -17,10 +17,12 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <img style="margin-left:" width="80" src="https://i.pinimg.com/280x280_RS/2a/a4/61/2aa461ebf2ab25f4248f395d4ee41e58.jpg" alt="">
+
+                <img width="100" src="https://document-export.canva.com/4WIq0/DAFSCl4WIq0/4/thumbnail/0001.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHWDTJW6UD%2F20221117%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221117T053102Z&X-Amz-Expires=11623&X-Amz-Signature=4010a823a0382f981246bc64ec9f255baa1ee81cae94e02cd80d5558a8815cf1&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2017%20Nov%202022%2008%3A44%3A45%20GMT" alt="">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <strong>IR-Shop</strong>
                 </a>
@@ -30,41 +32,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-{{--                    <ul class="navbar-nav me-auto">--}}
-{{--                        @isset($categories)--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" href="{{route('product.index')}}">All Products</a>--}}
-{{--                            </li>--}}
+                    <form class="d-none d-md-flex ms-3" style="width: 900px" method="GET" action="{{route('search')}}">
+                        <input class="form-control bg-white border-2" name="search" type="search" placeholder="Search">
+                    </form>
+                    <div class="collapse navbar-collapse" >
 
-{{--                            @foreach($categories as $cat)--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="{{route('product.category', $cat->id)}}">{{$cat->name}}</a>--}}
-{{--                                </li>--}}
-{{--                            @endforeach--}}
-{{--                        @endisset--}}
-{{--                    </ul>--}}
-
-                    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Catalog
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    @isset($categories)
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('product.index')}}">All Products</a>
-                                        </li>
-
-                                        @foreach($categories as $cat)
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{route('product.category', $cat->id)}}">{{$cat->name}}</a>
-                                            </li>
-                                        @endforeach
-                                    @endisset
-                                </ul>
-                            </li>
-                        </ul>
+                        <div class="container">
+                            <a href="{{route('products.basket')}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Right Side Of Navbar -->
@@ -101,15 +80,30 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                English
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @foreach(config('app.languages') as $ln => $lang)
+                                    <a class="dropdown-item" href="">
+                                       {{$lang}}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
         @if (session('message'))
             <div class="alert alert-success" role="alert">
                 {{ session('message') }}
             </div>
         @endif
+
         <main class="py-4">
 
             @yield('content')
@@ -117,69 +111,5 @@
     </div>
 </body>
 
-<style>
-
-</style>
-
-{{--<body>--}}
-{{--<section class="ftco-section">--}}
-
-{{--    <div class="container">--}}
-{{--        <div class="row justify-content-between">--}}
-{{--            <div class="col">--}}
-{{--                <a class="navbar-brand" href="index.html">Papermag <span>Magazine</span></a>--}}
-{{--            </div>--}}
-{{--            <div class="col d-flex justify-content-end">--}}
-
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">--}}
-{{--        <div class="container">--}}
-
-{{--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">--}}
-{{--                <span class="fa fa-bars"></span> Menu--}}
-{{--            </button>--}}
-{{--            <form action="#" class="searchform order-lg-last">--}}
-{{--                <div class="form-group d-flex">--}}
-{{--                    <input type="text" class="form-control pl-3" placeholder="Search">--}}
-{{--                    <button type="submit" placeholder="" class="form-control search"><span class="fa fa-search"></span></button>--}}
-{{--                </div>--}}
-{{--            </form>--}}
-{{--            <div class="collapse navbar-collapse" id="ftco-nav">--}}
-{{--                <ul class="navbar-nav mr-auto">--}}
-{{--                    <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>--}}
-{{--                    <li class="nav-item dropdown">--}}
-{{--                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>--}}
-{{--                        <div class="dropdown-menu" aria-labelledby="dropdown04">--}}
-{{--                            @isset($categories)--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="{{route('product.index')}}">All Products</a>--}}
-{{--                                </li>--}}
-{{--        --}}
-{{--                                @foreach($categories as $cat)--}}
-{{--                                    <li class="nav-item">--}}
-{{--                                        <a class="nav-link" href="{{route('product.category', $cat->id)}}">{{$cat->name}}</a>--}}
-{{--                                    </li>--}}
-{{--                               @endforeach--}}
-{{--                        @endisset--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>--}}
-{{--                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </nav>--}}
-{{--    <!-- END nav -->--}}
-
-{{--</section>--}}
-
-{{--<script src="js/jquery.min.js"></script>--}}
-{{--<script src="js/popper.js"></script>--}}
-{{--<script src="js/bootstrap.min.js"></script>--}}
-{{--<script src="js/main.js"></script>--}}
-
-{{--</body>--}}
 </html>
 

@@ -21,4 +21,13 @@ protected $fillable = ['name', 'url', 'description', 'price','size','category_id
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+    public function usersRated(){
+        return $this->belongsToMany(User::class)->
+        withPivot('rating');
+    }
+    public function basketUser(){
+        return $this->belongsToMany(User::class,'user_product')->withPivot('size','color','amount');
+    }
+
+
 }
