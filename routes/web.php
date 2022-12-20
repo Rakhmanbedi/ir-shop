@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth2\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Adm\UserController;
 use App\Http\Controllers\Adm\AddCategoryController;
+use App\Http\Controllers\LanguagesController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +23,7 @@ use App\Http\Controllers\Adm\AddCategoryController;
 Route::get('/', function () {
     return redirect()->route('product.index');
 });
-
+Route::get('lang/{lang}', [LanguagesController::class, 'switchLang'])->name('switch.lang');
 Route::middleware('auth')->group(function (){
     Route::resource('product', ProductController::class)->except('index','show');
     Route::post('/logout', [LoginController::class,'logout'])->name('logout');
@@ -31,7 +33,12 @@ Route::middleware('auth')->group(function (){
     Route::post('/product/{product}/basketall',[ProductController::class, 'basketAll'])->name('products.basketAll');
     Route::get('/product/basket',[ProductController::class, 'basket'])->name('products.basket');
     Route::post('/product/{product}/unbasket',[ProductController::class,'unbasketAll'])->name('products.unbasketAll');
-    Route::get('/product/basket/{product}/edit', [ProductController::class,'editbasket'])->name('products.editBasket');
+    Route::put('/product/basket/{basket}/edit', [ProductController::class,'editbasket'])->name('products.editBasket');
+    Route::get('/profile', [ProductController::class, 'profile'])->name('profile');
+    Route::put('/profile/update', [RegisterController::class,'update'])->name('profile.update');
+    Route::get('/about', [ProductController::class, 'about'])->name('about');
+    Route::get('balance', [UserController::class, 'balance'])->name('balance');
+    Route::put('/addbalance/{user}',[UserController::class,'addBalance'])->name('addBalance');
 
     Route::prefix('adm')->as('adm.')->middleware('hasrole:admin,moderator')->group(function (){
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -47,6 +54,8 @@ Route::middleware('auth')->group(function (){
         Route::post('/categories/store',[AddCategoryController::class,'store'])->name('categories.store');
         Route::get('/categories/{category}',[AddCategoryController::class,'delete'])->name('categories.delete');
         Route::post('/users/logout', [LoginController::class,'logout'])->name('logout');
+        Route::get('/basket',[UserController::class,'basket'])->name('basket');
+        Route::put('/basket/status/{basket}/update',[UserController::class,'updateBasket'])->name('updateBasket');
     });
 });
 Route::get('/search', [ProductController::class, 'index'])->name('search');

@@ -26,7 +26,7 @@ class LoginController extends Controller
                 return redirect()->intended('/adm/users');
             return redirect()->intended('/product');
         }
-        return back()->withErrors('Incorrect email or password');
+        return back()->withErrors(__('message.Incorrect email or password'));
 
     }
 
